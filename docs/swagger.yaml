@@ -1,0 +1,946 @@
+basePath: /
+definitions:
+  code.Failure:
+    properties:
+      code:
+        description: 业务码
+        type: integer
+      message:
+        description: 描述信息
+        type: string
+    type: object
+  config.emailResponse:
+    properties:
+      email:
+        description: 邮箱地址
+        type: string
+    type: object
+  helper.md5Response:
+    properties:
+      md5_str:
+        description: MD5后的字符串
+        type: string
+    type: object
+  prize.createResponse:
+    properties:
+      id:
+        description: 主键ID
+        type: integer
+    type: object
+  prize.deleteResponse:
+    properties:
+      id:
+        description: 主键ID
+        type: integer
+    type: object
+  prize.detailResponse:
+    properties:
+      content:
+        description: 奖品描述
+        type: string
+      created_at:
+        description: 创建时间
+        type: string
+      hashid:
+        description: hashid
+        type: string
+      id:
+        description: ID
+        type: integer
+      image:
+        description: 奖品图片
+        type: string
+      is_used:
+        description: 是否启用 1:是 0:否
+        type: integer
+      name:
+        description: 奖品名称
+        type: string
+      updated_at:
+        description: 更新时间
+        type: string
+      worth:
+        description: 奖品价值
+        type: number
+    type: object
+  prize.listData:
+    properties:
+      content:
+        description: 奖品描述
+        type: string
+      created_at:
+        description: 创建时间
+        type: string
+      hashid:
+        description: hashid
+        type: string
+      id:
+        description: ID
+        type: integer
+      image:
+        description: 奖品图片
+        type: string
+      is_used:
+        description: 是否启用 1:是 0:否
+        type: integer
+      name:
+        description: 奖品名称
+        type: string
+      updated_at:
+        description: 更新时间
+        type: string
+      worth:
+        description: 奖品价值
+        type: number
+    type: object
+  prize.listResponse:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/prize.listData'
+        type: array
+      pagination:
+        properties:
+          current_page:
+            type: integer
+          per_page_count:
+            type: integer
+          total:
+            type: integer
+        type: object
+    type: object
+  prize.modifyResponse:
+    properties:
+      id:
+        description: 主键ID
+        type: integer
+    type: object
+  prize.updateUsedResponse:
+    properties:
+      id:
+        description: 主键ID
+        type: integer
+    type: object
+  tool.dbData:
+    properties:
+      db_name:
+        description: 数据库名称
+        type: string
+    type: object
+  tool.dbsResponse:
+    properties:
+      list:
+        description: 数据库列表
+        items:
+          $ref: '#/definitions/tool.dbData'
+        type: array
+    type: object
+  tool.hashIdsDecodeResponse:
+    properties:
+      val:
+        description: 解密后的值
+        type: integer
+    type: object
+  tool.hashIdsEncodeResponse:
+    properties:
+      val:
+        description: 加密后的值
+        type: string
+    type: object
+  tool.searchCacheResponse:
+    properties:
+      ttl:
+        description: 过期时间
+        type: string
+      val:
+        description: 查询后的值
+        type: string
+    type: object
+  tool.searchMySQLResponse:
+    properties:
+      cols:
+        description: 查询后的行
+        items:
+          type: string
+        type: array
+      cols_info:
+        description: 行信息
+        items:
+          $ref: '#/definitions/tool.tableColumn'
+        type: array
+      list:
+        description: 查询后的数据
+        items:
+          additionalProperties: true
+          type: object
+        type: array
+    type: object
+  tool.sendMessageResponse:
+    properties:
+      status:
+        description: 状态
+        type: string
+    type: object
+  tool.tableColumn:
+    properties:
+      column_comment:
+        description: 字段注释
+        type: string
+      column_name:
+        description: 字段名称
+        type: string
+    type: object
+  tool.tableData:
+    properties:
+      table_comment:
+        description: 数据表备注
+        type: string
+      table_name:
+        description: 数据表名称
+        type: string
+    type: object
+  tool.tablesResponse:
+    properties:
+      list:
+        description: 数据表列表
+        items:
+          $ref: '#/definitions/tool.tableData'
+        type: array
+    type: object
+  user.detailResponse:
+    properties:
+      mobile:
+        description: 手机号
+        type: string
+      nickname:
+        description: 昵称
+        type: string
+      username:
+        description: 用户名
+        type: string
+    type: object
+  user.loginResponse:
+    properties:
+      token:
+        description: 用户身份标识
+        type: string
+    type: object
+  user.logoutResponse:
+    properties:
+      username:
+        description: 用户账号
+        type: string
+    type: object
+  user.modifyPasswordResponse:
+    properties:
+      username:
+        description: 用户账号
+        type: string
+    type: object
+  user.modifyPersonalInfoResponse:
+    properties:
+      username:
+        description: 用户账号
+        type: string
+    type: object
+  user.signupResponse:
+    properties:
+      token:
+        description: 用户身份标识
+        type: string
+    type: object
+info:
+  contact: {}
+  license:
+    name: MIT
+    url: https://go-gin-api-simple/blob/master/LICENSE
+  title: swagger 接口文档
+  version: "2.0"
+paths:
+  /api/config/email:
+    patch:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 修改邮件配置
+      parameters:
+      - description: 邮箱服务器
+        in: formData
+        name: host
+        required: true
+        type: string
+      - description: 端口
+        in: formData
+        name: port
+        required: true
+        type: string
+      - description: 发件人邮箱
+        in: formData
+        name: user
+        required: true
+        type: string
+      - description: 发件人密码
+        in: formData
+        name: pass
+        required: true
+        type: string
+      - description: 收件人邮箱地址，多个用,分割
+        in: formData
+        name: to
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/config.emailResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - LoginToken: []
+      summary: 修改邮件配置
+      tags:
+      - API.config
+  /api/login:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 用户登录
+      parameters:
+      - description: 用户名
+        in: formData
+        name: username
+        required: true
+        type: string
+      - description: MD5后的密码
+        in: formData
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.loginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      summary: 用户登录
+      tags:
+      - API.user
+  /api/prize:
+    get:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 奖品列表
+      parameters:
+      - default: 1
+        description: 第几页
+        in: query
+        name: page
+        required: true
+        type: integer
+      - default: 10
+        description: 每页显示条数
+        in: query
+        name: page_size
+        required: true
+        type: integer
+      - description: 奖品名称
+        in: query
+        name: name
+        type: string
+      - description: 奖品价值
+        in: query
+        name: worth
+        type: number
+      - description: 奖品描述
+        in: query
+        name: content
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/prize.listResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - LoginToken: []
+      summary: 奖品列表
+      tags:
+      - API.prize
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 新增奖品
+      parameters:
+      - description: 奖品名称
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: 奖品图片
+        in: formData
+        name: image
+        required: true
+        type: string
+      - description: 奖品价值
+        in: formData
+        name: worth
+        required: true
+        type: number
+      - description: 奖品描述
+        in: formData
+        name: content
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/prize.createResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - LoginToken: []
+      summary: 新增奖品
+      tags:
+      - API.prize
+  /api/prize/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: 删除奖品
+      parameters:
+      - description: hashId
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/prize.deleteResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - LoginToken: []
+      summary: 删除奖品
+      tags:
+      - API.prize
+    get:
+      consumes:
+      - application/json
+      description: 奖品详情
+      parameters:
+      - description: hashId
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/prize.detailResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - LoginToken: []
+      summary: 奖品详情
+      tags:
+      - API.prize
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 编辑奖品
+      parameters:
+      - description: 奖品id
+        in: formData
+        name: id
+        required: true
+        type: string
+      - description: 奖品名称
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: 奖品图片
+        in: formData
+        name: image
+        required: true
+        type: string
+      - description: 奖品价值
+        in: formData
+        name: worth
+        required: true
+        type: number
+      - description: 奖品描述
+        in: formData
+        name: content
+        required: true
+        type: string
+      - description: 是否启用
+        in: formData
+        name: is_used
+        required: true
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/prize.modifyResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - LoginToken: []
+      summary: 编辑奖品
+      tags:
+      - API.prize
+  /api/prize/used:
+    patch:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 更新奖品为启用/禁用
+      parameters:
+      - description: hashID
+        in: formData
+        name: id
+        required: true
+        type: string
+      - description: 是否启用 1:是 -1:否
+        in: formData
+        name: used
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/prize.updateUsedResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - LoginToken: []
+      summary: 更新奖品为启用/禁用
+      tags:
+      - API.prize
+  /api/signup:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 用户注册
+      parameters:
+      - description: 用户名
+        in: formData
+        name: username
+        required: true
+        type: string
+      - description: MD5后的密码
+        in: formData
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.signupResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      summary: 用户注册
+      tags:
+      - API.user
+  /api/tool/cache/clear:
+    patch:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 清空缓存
+      parameters:
+      - description: Redis Key
+        in: formData
+        name: redis_key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tool.searchCacheResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - LoginToken: []
+      summary: 清空缓存
+      tags:
+      - API.tool
+  /api/tool/cache/search:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 查询缓存
+      parameters:
+      - description: Redis Key
+        in: formData
+        name: redis_key
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tool.searchCacheResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - LoginToken: []
+      summary: 查询缓存
+      tags:
+      - API.tool
+  /api/tool/data/dbs:
+    get:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 查询 DB
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tool.dbsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - LoginToken: []
+      summary: 查询 DB
+      tags:
+      - API.tool
+  /api/tool/data/mysql:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 执行 SQL 语句
+      parameters:
+      - description: 数据库名称
+        in: formData
+        name: db_name
+        required: true
+        type: string
+      - description: 数据表名称
+        in: formData
+        name: table_name
+        required: true
+        type: string
+      - description: SQL 语句
+        in: formData
+        name: sql
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tool.searchMySQLResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - LoginToken: []
+      summary: 执行 SQL 语句
+      tags:
+      - API.tool
+  /api/tool/data/tables:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 查询 Table
+      parameters:
+      - description: 数据库名称
+        in: formData
+        name: db_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tool.tablesResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - LoginToken: []
+      summary: 查询 Table
+      tags:
+      - API.tool
+  /api/tool/hashids/decode/{id}:
+    get:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: HashIds 解密
+      parameters:
+      - description: 需解密的密文
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tool.hashIdsDecodeResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - LoginToken: []
+      summary: HashIds 解密
+      tags:
+      - API.tool
+  /api/tool/hashids/encode/{id}:
+    get:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: HashIds 加密
+      parameters:
+      - description: 需加密的数字
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tool.hashIdsEncodeResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - LoginToken: []
+      summary: HashIds 加密
+      tags:
+      - API.tool
+  /api/tool/send_message:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 发送消息
+      parameters:
+      - description: 消息内容
+        in: formData
+        name: message
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tool.sendMessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - LoginToken: []
+      summary: 发送消息
+      tags:
+      - API.tool
+  /api/user/info:
+    get:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 用户详情
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.detailResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - LoginToken: []
+      summary: 用户详情
+      tags:
+      - API.user
+  /api/user/logout:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 用户登出
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.logoutResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - LoginToken: []
+      summary: 用户登出
+      tags:
+      - API.user
+  /api/user/modify_password:
+    patch:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 修改密码
+      parameters:
+      - description: 旧密码（md5）
+        in: formData
+        name: old_password
+        required: true
+        type: string
+      - description: 新密码（md5）
+        in: formData
+        name: new_password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.modifyPasswordResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - LoginToken: []
+      summary: 修改密码
+      tags:
+      - API.user
+  /api/user/modify_personal_info:
+    patch:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 修改个人信息
+      parameters:
+      - description: 昵称
+        in: formData
+        name: nickname
+        required: true
+        type: string
+      - description: 手机号
+        in: formData
+        name: mobile
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.modifyPersonalInfoResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      security:
+      - LoginToken: []
+      summary: 修改个人信息
+      tags:
+      - API.user
+  /helper/md5/{str}:
+    get:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 加密
+      parameters:
+      - description: 需要加密的字符串
+        in: path
+        name: str
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.md5Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      summary: 加密
+      tags:
+      - Helper
+securityDefinitions:
+  LoginToken:
+    in: header
+    name: token
+    type: apiKey
+swagger: "2.0"
