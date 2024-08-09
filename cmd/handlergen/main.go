@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"go/token"
-	"io/ioutil"
 	"log"
 	"os"
 	"strings"
@@ -31,7 +30,7 @@ func main() {
 		log.Fatalf("parsing package: %s: %s\n", filePath, err)
 	}
 
-	files, _ := ioutil.ReadDir(filePath)
+	files, _ := os.ReadDir(filePath)
 	if len(files) > 1 {
 		log.Fatalf("请先确保 %s 目录中，有且仅有 handler.go 一个文件。", filePath)
 	}
