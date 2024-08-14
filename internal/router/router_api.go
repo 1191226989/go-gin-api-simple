@@ -1,6 +1,7 @@
 package router
 
 import (
+	"go-gin-api-simple/internal/api/captcha"
 	"go-gin-api-simple/internal/api/config"
 	"go-gin-api-simple/internal/api/helper"
 	"go-gin-api-simple/internal/api/prize"
@@ -26,6 +27,11 @@ func setApiRouter(r *resource) {
 	{
 		nologin.POST("/signup", userHandler.Signup())
 		nologin.POST("/login", userHandler.Login())
+
+		// captcha
+		captchaHandler := captcha.New(r.logger, r.cache)
+		nologin.POST("/captcha", captchaHandler.Verify())
+		nologin.GET("/captcha", captchaHandler.Create())
 	}
 
 	// 需要登录验证

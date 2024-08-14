@@ -20,6 +20,9 @@
 # 2. 在 prize 目录中，创建 handler.go 文件；
 # 3. 在 handler.go 文件中定义需要实现的接口，具体可参考其他 handler.go 文件
 ./scripts/handlergen.sh prize
+
+# 更新swagger文档
+./scripts/swagger.sh
 ```
 
 ## 原版文档索引

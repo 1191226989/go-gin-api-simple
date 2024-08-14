@@ -37,4 +37,6 @@ var zhCNText = map[int]string{
 	PrizeDeleteError: "删除奖品失败",
 	PrizeUpdateError: "更新奖品失败",
 	PrizeDetailError: "获取奖品信息失败",
+
+	CaptchaGenerateError: "生成验证码图片失败",
 }

@@ -1,5 +1,20 @@
 basePath: /
 definitions:
+  captcha.createResponse:
+    properties:
+      base64string:
+        description: 验证码图片base64字符串
+        type: string
+      captcha_id:
+        description: 验证码id
+        type: string
+    type: object
+  captcha.verifyResponse:
+    properties:
+      verify_result:
+        description: 验证结果
+        type: boolean
+    type: object
   code.Failure:
     properties:
       code:
@@ -257,6 +272,52 @@ info:
   title: swagger 接口文档
   version: "2.0"
 paths:
+  /api/captcha:
+    get:
+      description: 生成验证码id和图片
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/captcha.createResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      summary: 生成验证码id和图片
+      tags:
+      - API.captcha
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: 验证码校验
+      parameters:
+      - description: 验证码id
+        in: formData
+        name: captcha_id
+        required: true
+        type: string
+      - description: 验证码答案
+        in: formData
+        name: captcha_answer
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/captcha.verifyResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      summary: 验证码校验
+      tags:
+      - API.captcha
   /api/config/email:
     patch:
       consumes:

@@ -42,6 +42,9 @@ const (
 	// RedisKeyPrefixSignature Redis Key 前缀 - 签名验证信息
 	RedisKeyPrefixSignature = ProjectName + ":signature:"
 
+	// RedisKeyPrefixLoginUser Redis Key 前缀 - 图片验证码
+	RedisKeyPrefixCaptcha = ProjectName + ":captcha:"
+
 	// ZhCN 简体中文 - 中国
 	ZhCN = "zh-cn"
 

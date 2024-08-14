@@ -27,6 +27,75 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/captcha": {
+            "get": {
+                "description": "生成验证码id和图片",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "API.captcha"
+                ],
+                "summary": "生成验证码id和图片",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/captcha.createResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/code.Failure"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "验证码校验",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "API.captcha"
+                ],
+                "summary": "验证码校验",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "验证码id",
+                        "name": "captcha_id",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "验证码答案",
+                        "name": "captcha_answer",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/captcha.verifyResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/code.Failure"
+                        }
+                    }
+                }
+            }
+        },
         "/api/config/email": {
             "patch": {
                 "security": [
@@ -1087,6 +1156,28 @@ var doc = `{
         }
     },
     "definitions": {
+        "captcha.createResponse": {
+            "type": "object",
+            "properties": {
+                "base64string": {
+                    "description": "验证码图片base64字符串",
+                    "type": "string"
+                },
+                "captcha_id": {
+                    "description": "验证码id",
+                    "type": "string"
+                }
+            }
+        },
+        "captcha.verifyResponse": {
+            "type": "object",
+            "properties": {
+                "verify_result": {
+                    "description": "验证结果",
+                    "type": "boolean"
+                }
+            }
+        },
         "code.Failure": {
             "type": "object",
             "properties": {

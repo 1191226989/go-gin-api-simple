@@ -1,9 +1,10 @@
 package user
 
 import (
+	"time"
+
 	"go-gin-api-simple/internal/pkg/core"
 	"go-gin-api-simple/internal/repository/mysql/user"
-	"time"
 )
 
 type CreateUserData struct {

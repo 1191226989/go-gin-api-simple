@@ -53,6 +53,8 @@ const (
 	PrizeUpdateError = 20504
 	PrizeDetailError = 20505
 	PrizeModifyError = 20506
+
+	CaptchaGenerateError = 20601
 )
 
 func Text(code int) string {
