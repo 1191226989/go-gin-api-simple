@@ -10,8 +10,8 @@ import (
 )
 
 type verifyRequest struct {
-	CaptchaId     string `form:"captcha_id"`     // 验证码id
-	CaptchaAnswer string `form:"captcha_answer"` // 验证码答案
+	CaptchaId     string `form:"captcha_id" binding:"required"`     // 验证码id
+	CaptchaAnswer string `form:"captcha_answer" binding:"required"` // 验证码答案
 }
 
 type verifyResponse struct {

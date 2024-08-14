@@ -31,7 +31,7 @@ func setApiRouter(r *resource) {
 		// captcha
 		captchaHandler := captcha.New(r.logger, r.cache)
 		nologin.POST("/captcha", captchaHandler.Verify())
-		nologin.GET("/captcha", captchaHandler.Create())
+		nologin.GET("/captcha/:height/:width/:length", captchaHandler.Create())
 	}
 
 	// 需要登录验证

@@ -28,30 +28,6 @@ var doc = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/api/captcha": {
-            "get": {
-                "description": "生成验证码id和图片",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "API.captcha"
-                ],
-                "summary": "生成验证码id和图片",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/captcha.createResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/code.Failure"
-                        }
-                    }
-                }
-            },
             "post": {
                 "description": "验证码校验",
                 "consumes": [
@@ -85,6 +61,55 @@ var doc = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/captcha.verifyResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/code.Failure"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/captcha/{height}/{width}/{length}": {
+            "get": {
+                "description": "生成验证码id和图片",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "API.captcha"
+                ],
+                "summary": "生成验证码id和图片",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "验证码高度",
+                        "name": "height",
+                        "in": "path"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "验证码宽度",
+                        "name": "width",
+                        "in": "path"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "验证码长度",
+                        "name": "length",
+                        "in": "path"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/captcha.createResponse"
                         }
                     },
                     "400": {

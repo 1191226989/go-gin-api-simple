@@ -273,22 +273,6 @@ info:
   version: "2.0"
 paths:
   /api/captcha:
-    get:
-      description: 生成验证码id和图片
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/captcha.createResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/code.Failure'
-      summary: 生成验证码id和图片
-      tags:
-      - API.captcha
     post:
       consumes:
       - application/x-www-form-urlencoded
@@ -316,6 +300,38 @@ paths:
           schema:
             $ref: '#/definitions/code.Failure'
       summary: 验证码校验
+      tags:
+      - API.captcha
+  /api/captcha/{height}/{width}/{length}:
+    get:
+      consumes:
+      - application/json
+      description: 生成验证码id和图片
+      parameters:
+      - description: 验证码高度
+        in: path
+        name: height
+        type: integer
+      - description: 验证码宽度
+        in: path
+        name: width
+        type: integer
+      - description: 验证码长度
+        in: path
+        name: length
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/captcha.createResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/code.Failure'
+      summary: 生成验证码id和图片
       tags:
       - API.captcha
   /api/config/email:

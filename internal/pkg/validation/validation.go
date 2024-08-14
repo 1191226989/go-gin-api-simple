@@ -2,6 +2,7 @@ package validation
 
 import (
 	"fmt"
+	"reflect"
 
 	"go-gin-api-simple/configs"
 
@@ -18,17 +19,22 @@ var trans ut.Translator
 
 func init() {
 	lang := configs.Get().Language.Local
+	validate := binding.Validator.Engine().(*validator.Validate)
 
 	if lang == configs.ZhCN {
 		trans, _ = ut.New(zh.New()).GetTranslator("zh")
-		if err := zhTranslation.RegisterDefaultTranslations(binding.Validator.Engine().(*validator.Validate), trans); err != nil {
+		if err := zhTranslation.RegisterDefaultTranslations(validate, trans); err != nil {
 			fmt.Println("validator zh translation error", err)
 		}
+		// 将错误提示的验证字段名改为中文名
+		validate.RegisterTagNameFunc(func(field reflect.StructField) string {
+			return field.Tag.Get("label")
+		})
 	}
 
 	if lang == configs.EnUS {
 		trans, _ = ut.New(en.New()).GetTranslator("en")
-		if err := enTranslation.RegisterDefaultTranslations(binding.Validator.Engine().(*validator.Validate), trans); err != nil {
+		if err := enTranslation.RegisterDefaultTranslations(validate, trans); err != nil {
 			fmt.Println("validator en translation error", err)
 		}
 	}
