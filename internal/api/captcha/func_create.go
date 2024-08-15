@@ -1,10 +1,11 @@
 package captcha
 
 import (
+	"net/http"
+
 	"go-gin-api-simple/internal/code"
 	"go-gin-api-simple/internal/pkg/captcha"
 	"go-gin-api-simple/internal/pkg/core"
-	"net/http"
 
 	"github.com/mojocn/base64Captcha"
 )

@@ -1,8 +1,9 @@
 package captcha
 
 import (
-	"go-gin-api-simple/internal/repository/redis"
 	"time"
+
+	"go-gin-api-simple/internal/repository/redis"
 )
 
 type StoreRedis struct {

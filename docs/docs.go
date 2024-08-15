@@ -31,7 +31,7 @@ var doc = `{
             "post": {
                 "description": "验证码校验",
                 "consumes": [
-                    "application/x-www-form-urlencoded"
+                    "application/json"
                 ],
                 "produces": [
                     "application/json"
@@ -42,18 +42,13 @@ var doc = `{
                 "summary": "验证码校验",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "验证码id",
-                        "name": "captcha_id",
-                        "in": "formData",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "验证码答案",
-                        "name": "captcha_answer",
-                        "in": "formData",
-                        "required": true
+                        "description": "请求信息",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/captcha.verifyRequest"
+                        }
                     }
                 ],
                 "responses": {
@@ -1186,6 +1181,23 @@ var doc = `{
             "properties": {
                 "base64string": {
                     "description": "验证码图片base64字符串",
+                    "type": "string"
+                },
+                "captcha_id": {
+                    "description": "验证码id",
+                    "type": "string"
+                }
+            }
+        },
+        "captcha.verifyRequest": {
+            "type": "object",
+            "required": [
+                "captcha_answer",
+                "captcha_id"
+            ],
+            "properties": {
+                "captcha_answer": {
+                    "description": "验证码答案",
                     "type": "string"
                 },
                 "captcha_id": {

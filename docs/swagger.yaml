@@ -9,6 +9,18 @@ definitions:
         description: 验证码id
         type: string
     type: object
+  captcha.verifyRequest:
+    properties:
+      captcha_answer:
+        description: 验证码答案
+        type: string
+      captcha_id:
+        description: 验证码id
+        type: string
+    required:
+    - captcha_answer
+    - captcha_id
+    type: object
   captcha.verifyResponse:
     properties:
       verify_result:
@@ -275,19 +287,15 @@ paths:
   /api/captcha:
     post:
       consumes:
-      - application/x-www-form-urlencoded
+      - application/json
       description: 验证码校验
       parameters:
-      - description: 验证码id
-        in: formData
-        name: captcha_id
+      - description: 请求信息
+        in: body
+        name: Request
         required: true
-        type: string
-      - description: 验证码答案
-        in: formData
-        name: captcha_answer
-        required: true
-        type: string
+        schema:
+          $ref: '#/definitions/captcha.verifyRequest'
       produces:
       - application/json
       responses:
