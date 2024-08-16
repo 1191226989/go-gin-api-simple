@@ -23,7 +23,7 @@ type verifyResponse struct {
 // @Summary 验证码校验
 // @Description 验证码校验
 // @Tags API.captcha
-// @Accept application/json
+// @Accept json
 // @Produce json
 // @Param Request body verifyRequest true "请求参数"
 // @Success 200 {object} verifyResponse

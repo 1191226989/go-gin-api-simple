@@ -1,11 +1,13 @@
 package captcha
 
 import (
+	"fmt"
 	"net/http"
 
 	"go-gin-api-simple/internal/code"
 	"go-gin-api-simple/internal/pkg/captcha"
 	"go-gin-api-simple/internal/pkg/core"
+	"go-gin-api-simple/internal/pkg/validation"
 
 	"github.com/mojocn/base64Captcha"
 )
@@ -37,11 +39,11 @@ func (h *handler) Create() core.HandlerFunc {
 	return func(ctx core.Context) {
 		req := new(createRequest)
 		if err := ctx.ShouldBindURI(req); err != nil {
-			// fmt.Println(validation.Error(err))
 			ctx.AbortWithError(core.Error(
 				http.StatusBadRequest,
 				code.ParamBindError,
-				code.Text(code.ParamBindError)).WithError(err),
+				fmt.Sprintf("%s: %s", code.Text(code.ParamBindError), validation.Error(err))).WithError(err),
+			// code.Text(code.ParamBindError)).WithError(err),
 			)
 			return
 		}

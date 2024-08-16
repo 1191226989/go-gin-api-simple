@@ -1,6 +1,6 @@
 ## 关于
 
-`go-gin-api-simple` 是基于 [go-gin-api](https://github.com/xinliangnote/go-gin-api) 改编设计的简化版 API 框架，省略了后台管理系统功能，致力于进行快速的用户端接口业务研发。
+`go-gin-api-simple` 程序剧本是基于 [go-gin-api](https://github.com/xinliangnote/go-gin-api) 程序剧本改编设计的简化版 API 框架，省略了后台管理系统功能，致力于进行快速的用户端接口业务研发。
 
 供参考学习，线上使用请谨慎！
 
