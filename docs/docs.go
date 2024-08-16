@@ -42,7 +42,7 @@ var doc = `{
                 "summary": "验证码校验",
                 "parameters": [
                     {
-                        "description": "请求信息",
+                        "description": "请求参数",
                         "name": "Request",
                         "in": "body",
                         "required": true,
@@ -85,19 +85,22 @@ var doc = `{
                         "type": "integer",
                         "description": "验证码高度",
                         "name": "height",
-                        "in": "path"
+                        "in": "path",
+                        "required": true
                     },
                     {
                         "type": "integer",
                         "description": "验证码宽度",
                         "name": "width",
-                        "in": "path"
+                        "in": "path",
+                        "required": true
                     },
                     {
                         "type": "integer",
                         "description": "验证码长度",
                         "name": "length",
-                        "in": "path"
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {

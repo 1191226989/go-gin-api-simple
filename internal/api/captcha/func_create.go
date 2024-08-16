@@ -13,9 +13,9 @@ import (
 )
 
 type createRequest struct {
-	Height int32 `uri:"height" binding:"max=1000,min=10" label:"高度"` // 验证码高度
-	Width  int32 `uri:"width" binding:"max=1000,min=10" label:"宽度"`  // 验证码宽度
-	Length int32 `uri:"length" binding:"max=10,min=1" label:"长度"`    // 验证码长度
+	Height int32 `uri:"height" binding:"required,max=1000,min=10" label:"高度"` // 验证码高度
+	Width  int32 `uri:"width" binding:"required,max=1000,min=10" label:"宽度"`  // 验证码宽度
+	Length int32 `uri:"length" binding:"required,max=10,min=1" label:"长度"`    // 验证码长度
 }
 
 type createResponse struct {
@@ -29,9 +29,9 @@ type createResponse struct {
 // @Tags API.captcha
 // @Accept json
 // @Produce json
-// @Param height path integer false "验证码高度"
-// @Param width path integer false "验证码宽度"
-// @Param length path integer false "验证码长度"
+// @Param height path integer true "验证码高度"
+// @Param width path integer true "验证码宽度"
+// @Param length path integer true "验证码长度"
 // @Success 200 {object} createResponse
 // @Failure 400 {object} code.Failure
 // @Router /api/captcha/{height}/{width}/{length} [get]

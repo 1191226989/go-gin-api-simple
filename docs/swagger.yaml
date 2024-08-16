@@ -290,7 +290,7 @@ paths:
       - application/json
       description: 验证码校验
       parameters:
-      - description: 请求信息
+      - description: 请求参数
         in: body
         name: Request
         required: true
@@ -319,14 +319,17 @@ paths:
       - description: 验证码高度
         in: path
         name: height
+        required: true
         type: integer
       - description: 验证码宽度
         in: path
         name: width
+        required: true
         type: integer
       - description: 验证码长度
         in: path
         name: length
+        required: true
         type: integer
       produces:
       - application/json
