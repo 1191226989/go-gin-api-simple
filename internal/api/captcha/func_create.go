@@ -13,9 +13,9 @@ import (
 )
 
 type createRequest struct {
-	Height int32 `uri:"height" binding:"required,max=1000,min=10" label:"高度"` // 验证码高度
-	Width  int32 `uri:"width" binding:"required,max=1000,min=10" label:"宽度"`  // 验证码宽度
-	Length int32 `uri:"length" binding:"required,max=10,min=1" label:"长度"`    // 验证码长度
+	Height int32 `uri:"height" binding:"required,lte=1000,gte=10" label:"高度"` // 验证码高度
+	Width  int32 `uri:"width" binding:"required,lte=1000,gte=10" label:"宽度"`  // 验证码宽度
+	Length int32 `uri:"length" binding:"required,lte=10,gte=1" label:"长度"`    // 验证码长度
 }
 
 type createResponse struct {

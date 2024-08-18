@@ -50,3 +50,17 @@ func Error(err error) (message string) {
 	}
 	return message
 }
+
+// 自定义验证错误提示
+func CustomErrorMessage(err error, req interface{}) string {
+	request := reflect.TypeOf(req)
+	if errs, ok := err.(validator.ValidationErrors); ok {
+
+		for _, e := range errs {
+			if f, exists := request.Elem().FieldByName(e.StructField()); exists {
+				return f.Tag.Get("msg")
+			}
+		}
+	}
+	return err.Error()
+}

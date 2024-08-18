@@ -6,13 +6,14 @@ import (
 	"go-gin-api-simple/internal/code"
 	"go-gin-api-simple/internal/pkg/captcha"
 	"go-gin-api-simple/internal/pkg/core"
+	"go-gin-api-simple/internal/pkg/validation"
 
 	"github.com/mojocn/base64Captcha"
 )
 
 type verifyRequest struct {
-	CaptchaId     string `json:"captcha_id" binding:"required"`     // 验证码id
-	CaptchaAnswer string `json:"captcha_answer" binding:"required"` // 验证码答案
+	CaptchaId     string `json:"captcha_id" binding:"required" msg:"验证码id不能为空"`     // 验证码id
+	CaptchaAnswer string `json:"captcha_answer" binding:"required" msg:"验证码答案不能为空"` // 验证码答案
 }
 
 type verifyResponse struct {
@@ -36,7 +37,8 @@ func (h *handler) Verify() core.HandlerFunc {
 			ctx.AbortWithError(core.Error(
 				http.StatusBadRequest,
 				code.ParamBindError,
-				code.Text(code.ParamBindError)).WithError(err),
+				validation.CustomErrorMessage(err, req)).WithError(err),
+			// code.Text(code.ParamBindError)).WithError(err),
 			)
 			return
 		}
